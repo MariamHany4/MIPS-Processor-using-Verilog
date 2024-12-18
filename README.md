@@ -1,11 +1,13 @@
 # MIPS-Processor-using-Verilog
 🚀 MIPS Processor Simulation Using Verilog 🚀
 
+
 🧠 Memory Configuration:
 
 16K Data Memory 📊
 
 4K Instruction Memory 🧩
+
 
 💻 Supported Instructions:
 
@@ -18,6 +20,7 @@ lw: Load data from memory to register 📥
 sw: Store data from register to memory 📤
 
 beq: Branch if equal (conditional jump) ↩️
+
 
 🔧 This simulation executes the following instructions:
 
