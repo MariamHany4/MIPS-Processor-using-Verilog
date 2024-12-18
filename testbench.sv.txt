@@ -1,0 +1,82 @@
+module mips_testbench;
+
+  // Signals
+  reg clk;
+  reg [31:0] pc;           // Program counter
+  wire [31:0] instruction; // Instruction fetched from memory
+  wire [31:0] read_data1, read_data2, alu_result, mem_result;
+  wire [3:0] alu_control;
+  reg [31:0] write_data;
+  reg [4:0] rs, rt, rd;
+
+  // Instantiate modules
+  instruction_memory IM (
+    .addr(pc),
+    .data(instruction)
+  );
+
+  registers Regs (
+    .RegWrite(1'b1), 
+    .rs(instruction[25:21]),
+    .rt(instruction[20:16]),
+    .rd(instruction[15:11]),
+    .write_data(write_data),
+    .read_data1(read_data1),
+    .read_data2(read_data2)
+  );
+
+  ALU_Controller ALU_Control_Unit (
+    .func(instruction[5:0]),
+    .ALU_Op(2'b10), // R-Type operation
+    .ALU_Control(alu_control)
+  );
+
+  ALU ALU_Unit (
+    .data1(read_data1),
+    .data2(read_data2),
+    .ALU_Control(alu_control),
+    .zero_flag(), // Not used
+    .result(alu_result)
+  );
+
+  data_memory DM (
+    .addr(alu_result),
+    .wdata(read_data2),
+    .we(1'b1),
+    .mem_read(1'b0),
+    .rdata(mem_result)
+  );
+
+  // Clock generation
+  always #5 clk = ~clk;
+
+  initial begin
+    // Initialize
+    clk = 0;
+    pc = 0;
+
+
+
+    $display("==== MIPS Processor Testbench ====");
+    $display("\t\t  Time\tPC\tInstruction\tReadData1\tReadData2\tALUResult");
+
+    // Test instructions
+    repeat (15) begin
+      #10; // Wait for 1 clock cycle
+
+      // Fetch instruction
+      $display("%d %h\t%h\t%h\t%h\t%h", 
+               $time, pc, instruction, read_data1, read_data2, alu_result);
+      pc = pc + 4; // Increment program counter
+    end
+
+    // Finish simulation
+    #150;
+    $display("Simulation complete.");
+    $finish;
+  end
+initial begin
+   $dumpfile("mips.vcd");
+   $dumpvars(0, mips_testbench);
+end
+endmodule
