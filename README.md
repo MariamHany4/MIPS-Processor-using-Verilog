@@ -33,3 +33,4 @@ lw: Loads data from memory into a register.
 sw: Stores data from a register into memory.
 
 beq: Compares two registers, and if they are equal, it branches to a specified address.
+![Screenshot 2024-12-18 043616](https://github.com/user-attachments/assets/109850f1-25de-45e0-89d6-d4309f247885)
