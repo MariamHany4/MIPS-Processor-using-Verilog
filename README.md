@@ -6,10 +6,15 @@
 4K Instruction Memory 🧩
 
 💻 Supported Instructions:
+
 add: Add two registers ➕
+
 sub: Subtract two registers ➖
+
 lw: Load data from memory to register 📥
+
 sw: Store data from register to memory 📤
+
 beq: Branch if equal (conditional jump) ↩️
 
 🔧 This simulation executes the following instructions:
